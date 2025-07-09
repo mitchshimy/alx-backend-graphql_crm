@@ -1,16 +1,16 @@
 #!/bin/bash
 # Deletes customers with no orders in the past year and logs the deletion count.
 
-# Get directory of the script
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Get current working directory (cwd) of this script
+SCRIPT_CWD="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# Navigate to Django root (2 levels up from script)
-cd "$SCRIPT_DIR/../.." || {
+# Navigate to Django project root (2 levels up from cwd)
+cd "$SCRIPT_CWD/../.." || {
     echo "Failed to change to project root directory"
     exit 1
 }
 
-# Run Python cleanup logic and capture deleted count
+# Run cleanup logic and get number of deleted customers
 deleted_count=$(python3 manage.py shell <<EOF
 from crm.models import Customer, Order
 from django.utils import timezone
@@ -26,7 +26,7 @@ print(count)
 EOF
 )
 
-# Log output to temp file with timestamp
+# Log cleanup result
 if [ -n "$deleted_count" ]; then
     echo "$(date): Deleted $deleted_count inactive customers" >> /tmp/customer_cleanup_log.txt
 else
