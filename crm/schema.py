@@ -44,7 +44,18 @@ class UpdateLowStockProducts(graphene.Mutation):
 class Query(graphene.ObjectType):
     customer = graphene.relay.Node.Field(CustomerType)
     all_customers = DjangoFilterConnectionField(CustomerType)
+    total_customers = graphene.Int()
+    total_orders = graphene.Int()
+    total_revenue = graphene.Float()
 
+    def resolve_total_customers(root, info):
+        return Customer.objects.count()
+
+    def resolve_total_orders(root, info):
+        return Order.objects.count()
+
+    def resolve_total_revenue(root, info):
+        return sum(order.total_amount for order in Order.objects.all())
 # ✅ Combine all mutations here
 class Mutation(graphene.ObjectType):
     create_customer = CreateCustomer.Field()
