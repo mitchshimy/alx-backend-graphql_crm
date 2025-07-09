@@ -1,0 +1,45 @@
+# Python cache and bytecode files
+__pycache__/
+*.py[cod]
+*.sqlite3
+
+# Virtual environment
+venv/
+ENV/
+env/
+.venv/
+
+# Django secret files
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# VS Code and editor files
+.vscode/
+.idea/
+*.swp
+
+# Django migrations (optional – uncomment to exclude)
+# */migrations/
+# !*/migrations/__init__.py
+
+# Static and media files
+/staticfiles/
+/media/
+/build/
+/dist/
+
+# dotenv env files
+.env
+.env.*
+
+# macOS & Windows
+.DS_Store
+Thumbs.db
+
+# Node (if ever used for Tailwind or frontend)
+node_modules/
